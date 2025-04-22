@@ -1,4 +1,4 @@
-require 'the8bitbass'
+require("the8bitbass")
 
 --[[
 
