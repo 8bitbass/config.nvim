@@ -22,7 +22,8 @@ autocmd("CmdlineLeave", {
 })
 
 local The8BitBassGroup = augroup("The8BitBass", { clear = true })
-local YankGroup = augroup("HighlightYank", { clear = true }) -- Highlight when yanking (copying) text
+local YankGroup = augroup("HighlightYank", { clear = true })
+-- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 autocmd("TextYankPost", {
