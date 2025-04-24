@@ -24,6 +24,11 @@ return {
 
             -- Useful status updates for LSP.
             { "j-hui/fidget.nvim", opts = {} },
+
+            -- Other tools for langauges
+            -- F#
+            -- { "ionide/Ionide-vim", opts = {} },
+            -- { "WillEhrendreich/Ionide-nvim", opts = {} },
         },
         config = function()
             require("conform").setup({
@@ -49,6 +54,8 @@ return {
             --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
             --  - settings (table): Override the default settings passed when initializing the server.
             --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+            -- require("ionide").setup()
+
             local servers = {
                 -- clangd = {},
                 -- gopls = {},
@@ -62,7 +69,12 @@ return {
                 -- But for many setups, the LSP (`ts_ls`) will work just fine
                 -- ts_ls = {},
                 --
-
+                fsautocomplete = {},
+                -- ionide = {
+                --     flags = {
+                --         debounce_text_changes = 150,
+                --     },
+                -- },
                 lua_ls = {
                     -- cmd = { ... },
                     -- filetypes = { ... },
@@ -75,8 +87,6 @@ return {
                                     vim.env.VIMRUNTIME,
                                     "${3rd}/luv/library",
                                 },
-                                -- Make the server aware of Neovim runtime files
-                                -- library = vim.api.nvim_get_runtime_file("", true),
                             },
                             completion = {
                                 callSnippet = "Replace",
@@ -113,12 +123,20 @@ return {
                 handlers = {
                     function(server_name)
                         local server = servers[server_name] or {}
+                        -- local configs = require("lspconfig.configs")
+                        -- print(vim.inspect(configs))
                         -- This handles overriding only values explicitly passed
                         -- by the server configuration above. Useful when disabling
                         -- certain features of an LSP (for example, turning off formatting for ts_ls)
                         server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
                         require("lspconfig")[server_name].setup(server)
                     end,
+                    -- ionide = function(_, opts)
+                    --     print("setup ionide")
+                    --     require("ionide").setup(opts)
+                    -- end,
+                    -- -- NOTE: returning true will make sure fsautocomplete is not setup with neovim, which is what we want if we're using Ionide-nvim
+                    -- fsautocomplete = function() end,
                 },
             })
 
@@ -148,10 +166,9 @@ return {
                     -- },
                     { name = "nvim_lsp" },
                     { name = "luasnip" },
+                    { name = "buffer" },
                     { name = "path" },
                     { name = "nvim_lsp_signature_help" },
-                }, {
-                    { name = "buffer" },
                 }),
             })
 
