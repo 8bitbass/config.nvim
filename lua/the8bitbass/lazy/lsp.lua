@@ -70,7 +70,7 @@ return {
                 -- ts_ls = {},
                 --
                 fsautocomplete = {
-                    root_dir = require('lspconfig.util').root_pattern("*.sln", "*.fsproj", ".git", "*.fsx"),
+                    root_dir = require("lspconfig.util").root_pattern("*.sln", "*.fsproj", ".git", "*.fsx"),
                 },
 
                 -- ionide = {
@@ -123,25 +123,18 @@ return {
             require("mason-lspconfig").setup({
                 ensure_installed = {}, -- populates installs via mason-tool-installer
                 automatic_installation = false,
-                handlers = {
-                    function(server_name)
-                        local server = servers[server_name] or {}
-                        -- local configs = require("lspconfig.configs")
-                        -- print(vim.inspect(configs))
-                        -- This handles overriding only values explicitly passed
-                        -- by the server configuration above. Useful when disabling
-                        -- certain features of an LSP (for example, turning off formatting for ts_ls)
-                        server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-                        require("lspconfig")[server_name].setup(server)
-                    end,
-                    -- ionide = function(_, opts)
-                    --     print("setup ionide")
-                    --     require("ionide").setup(opts)
-                    -- end,
-                    -- -- NOTE: returning true will make sure fsautocomplete is not setup with neovim, which is what we want if we're using Ionide-nvim
-                    -- fsautocomplete = function() end,
-                },
             })
+
+            for server_name, server in pairs(servers) do
+                server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+                vim.lsp.config(server_name, server)
+                -- ionide = function(_, opts)
+                --     print("setup ionide")
+                --     require("ionide").setup(opts)
+                -- end,
+                -- -- NOTE: returning true will make sure fsautocomplete is not setup with neovim, which is what we want if we're using Ionide-nvim
+                -- fsautocomplete = function() end,
+            end
 
             cmp.setup({
                 snippet = {
