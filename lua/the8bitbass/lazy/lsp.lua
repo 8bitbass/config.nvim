@@ -69,7 +69,10 @@ return {
                 -- But for many setups, the LSP (`ts_ls`) will work just fine
                 -- ts_ls = {},
                 --
-                fsautocomplete = {},
+                fsautocomplete = {
+                    root_dir = require('lspconfig.util').root_pattern("*.sln", "*.fsproj", ".git", "*.fsx"),
+                },
+
                 -- ionide = {
                 --     flags = {
                 --         debounce_text_changes = 150,
@@ -156,7 +159,7 @@ return {
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-                    ["<C-Space>"] = cmp.mapping.complete({}),
+                    ["<C-j>"] = cmp.mapping.complete(),
                 }),
                 sources = cmp.config.sources({
                     -- {

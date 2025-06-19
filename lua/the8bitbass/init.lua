@@ -4,6 +4,7 @@ require("the8bitbass.lazy_init")
 print("hello world")
 
 vim.cmd("let filetype_fs = 'fsharp'")
+vim.cmd("let filetype_fsx = 'fsharp'")
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -58,6 +59,8 @@ autocmd("LspAttach", {
         keymap("n", "<leader>ni", function() vim.lsp.buf.implementation() end, "[N]avigate to [I]mplementation")
         keymap("n", "<leader>nt", function() vim.lsp.buf.type_definition() end, "[N]avigate to [T]ype")
         keymap("n", "<leader>ns", function() vim.lsp.buf.workspace_symbol() end, "[N]avigate to [S]ymbol")
+
+        keymap("n", "<leader>ds", function() vim.diagnostic.open_float() end, "[D]ebug [S]how")
 
         keymap("n", "<leader>rr", function() vim.lsp.buf.rename() end, "[R]efactor [R]ename")
         keymap("n", "<leader>ra", function() vim.lsp.buf.code_action() end, "[R]efactor [A]ction")

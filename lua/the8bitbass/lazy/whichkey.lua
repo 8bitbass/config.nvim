@@ -60,7 +60,7 @@ return {
             -- Document existing key chains
             spec = {
                 { "<leader>c", group = "[C]ode" },
-                { "<leader>d", group = "[D]ocument" },
+                { "<leader>d", group = "[D]ebug" },
                 { "<leader>n", group = "[N]avigate" },
                 { "<leader>r", group = "[R]efactor", mode = { "n", "x" } },
                 { "<leader>s", group = "[S]earch" },

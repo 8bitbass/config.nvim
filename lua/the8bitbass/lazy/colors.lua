@@ -1,27 +1,28 @@
 function ColorMyPencils(color)
-    color = color or "rose-pine-moon"
+    color = color or "knight-life"
     vim.cmd.colorscheme(color)
 
-    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+    -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+    -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
 
 return {
     {
-        "rose-pine/neovim",
-        name = "rose-pine",
+        "8bitbass/knight-life",
+        name = "knight-life",
         lazy = false,
         priority = 1000,
+        dev = true,
         config = function()
-            require("rose-pine").setup({
-                highlight_groups = {
-                    TelescopeBorder = { fg = "highlight_high", bg = "none" },
-                    TelescopeNormal = { bg = "none" },
-                    TelescopePromptNormal = { bg = "base" },
-                    TelescopeResultsNormal = { fg = "subtle", bg = "none" },
-                    TelescopeSelection = { fg = "text", bg = "base" },
-                    TelescopeSelectionCaret = { fg = "rose", bg = "rose" },
-                },
+            require("knight-life").setup({
+                on_highlights = function(hl,c)
+                        hl.TelescopeBorder = { bg = c.none }
+                        hl.TelescopeNormal = { bg = c.none }
+                        hl.TelescopePromptNormal = { bg = c.bg }
+                        hl.TelescopeResultsNormal = { fg = c.text.unfocused, bg = c.none }
+                        hl.TelescopeSelection = { fg = c.text.default, bg = c.bg_highlight }
+                end,
+                transparent = true,
                 styles = {
                     italic = false,
                     transparency = true,
