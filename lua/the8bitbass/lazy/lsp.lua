@@ -69,8 +69,12 @@ return {
                 -- But for many setups, the LSP (`ts_ls`) will work just fine
                 -- ts_ls = {},
                 --
+                -- https://github.com/neovim/nvim-lspconfig/blob/master/lsp/fsautocomplete.lua
                 fsautocomplete = {
-                    root_dir = require("lspconfig.util").root_pattern("*.sln", "*.fsproj", ".git", "*.fsx"),
+                    root_dir = function(bufnr, on_dir)
+                        local fname = vim.api.nvim_buf_get_name(bufnr)
+                        on_dir(require("lspconfig.util").root_pattern("*.sln", "*.fsproj", ".git", "*.fsx")(fname))
+                    end,
                 },
 
                 -- ionide = {
