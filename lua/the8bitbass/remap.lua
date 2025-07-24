@@ -20,6 +20,9 @@ vim.keymap.set("n", "<leader>i", "<cmd>Inspect<CR>")
 -- If you know, you know
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
+
 vim.keymap.set(
     "n",
     "<leader>f",

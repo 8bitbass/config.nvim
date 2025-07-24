@@ -16,6 +16,11 @@ return {
 
                 local bufnr = vim.api.nvim_get_current_buf()
                 local opts = { buffer = bufnr, remap = false }
+
+                vim.keymap.set("n", "<leader>F", function()
+                    vim.cmd.Git("fetch --all")
+                end, { buffer = bufnr, remap = false, desc = "fetch" })
+
                 vim.keymap.set("n", "<leader>p", function()
                     vim.cmd.Git("push")
                 end, { buffer = bufnr, remap = false, desc = "push" })
