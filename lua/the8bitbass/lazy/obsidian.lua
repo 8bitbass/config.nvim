@@ -30,6 +30,7 @@ end
 return {
     "8bitbass/obsidian.nvim",
     dev = true,
+    branch = "dragon-glass",
     -- lazy = true,
     -- ft = "markdown",
     dependencies = {
@@ -46,6 +47,7 @@ return {
             },
         },
         legacy_commands = false,
+        archive_subdir = "Archive",
         notes_subdir = "Inbox",
         note_path_func = function(spec)
             local function camelize(input)
@@ -69,7 +71,7 @@ return {
         disable_frontmatter = function(filename)
             print(filename)
             local fn = string.lower(filename)
-            if string.find(fn, "shoppinglist") then
+            if string.find(fn, "shoppinglist") or string.find(fn, "inbox") then
                 return true
             else
                 return false
@@ -93,6 +95,9 @@ return {
                 },
                 email = {
                     notes_subdir = "Communications/Emails",
+                },
+                interview = {
+                    notes_subdir = "Communications/Interviews",
                 },
                 meeting = {
                     notes_subdir = "Communications/Meetings",
@@ -135,6 +140,7 @@ return {
         -- Optional, define your own callbacks to further customize behavior.
         callbacks = {
             post_setup = function(client)
+                vim.keymap.set( "n", "<leader>on", function() vim.cmd("Obsidian new") end, { desc = "New Note" })
                 vim.keymap.set( "n", "<leader>ot", function() vim.cmd("Obsidian new_from_template") end, { desc = "New note from template" })
                 vim.keymap.set( "n", "<leader>op", function() vim.cmd("Obsidian new_from_template person") end, { desc = "New Person" })
                 vim.keymap.set( "n", "<leader>oi", function() vim.cmd("Obsidian new_from_template idea") end, { desc = "New Idea" })
@@ -143,7 +149,7 @@ return {
             end,
             enter_note = function(client, note)
                 local bufnr = note.bufnr
-                vim.keymap.set("n", "<leader>t", function()
+                vim.keymap.set("n", "<leader>T", function()
                     local success, tags = pcall(getInput, "Enter space separated Tags:", { completion = "file" })
                     if not success or not tags then
                         return
@@ -155,7 +161,7 @@ return {
                         end
                     end
                     -- note:add_tag(tag)
-                    note:update_frontmatter(bufnr)
+                    note:force_update_frontmatter(bufnr)
                 end, { buffer = bufnr, remap = false, desc = "Add Tags" })
             end,
         },
