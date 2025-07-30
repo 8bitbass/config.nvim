@@ -16,6 +16,8 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 -- quick highlight check
 vim.keymap.set("n", "<leader>i", "<cmd>Inspect<CR>")
+-- remove \r
+vim.keymap.set("n", "<leader>rl", "<cmd>%s/\r//g<CR>")
 
 -- If you know, you know
 vim.keymap.set("i", "<C-c>", "<Esc>")
